@@ -1,0 +1,83 @@
+<mat-card class="container my-4">
+  <mat-horizontal-stepper [linear]="false">
+    <mat-step [stepControl]="loginForm">
+      <form [formGroup]="loginForm">
+        <ng-template matStepLabel>Informações basicas</ng-template>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="d-block">
+              <input matInput type="text" placeholder="Nome" formControlName="name" required>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="d-block">
+              <input matInput type="email" placeholder="Email" formControlName="email" required>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="d-block">
+              <input matInput placeholder="Senha" [type]="hide ? 'password' : 'text'" formControlName="password"
+                required>
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="loginForm.controls.password.invalid">Digite uma senha valida</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-right">
+          <button mat-raised-button color="primary" matStepperNext>Proximo</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="addressForm">
+      <div class="desktop mt-3">
+        <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onMapClick($event)">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map>
+      </div>
+      <form [formGroup]="addressForm">
+        <ng-template matStepLabel>Endereço</ng-template>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="d-block">
+              <input matInput placeholder="Rua" formControlName="street" required>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+              <mat-form-field class="d-block">
+                <input matInput placeholder="Numero" type="number" formControlName="number" required>
+              </mat-form-field>
+            </div>
+          <div class="col-md-4">
+            <mat-form-field class="d-block">
+              <input matInput placeholder="Cidade" formControlName="city" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="d-block">
+              <input matInput placeholder="Estado" formControlName="state" required>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="d-block">
+              <input matInput placeholder="País" formControlName="country" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-right">
+          <button mat-raised-button color="accent" class="mr-1" matStepperPrevious>Anterior</button>
+          <button mat-raised-button color="primary" matStepperNext>Proximo</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Pronto</ng-template>
+      Clique em enviar para finalizar seu registro.
+      <div class="text-right">
+        <button mat-raised-button color="accent" class="mr-1" matStepperPrevious>Anterior</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Enviar</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>
